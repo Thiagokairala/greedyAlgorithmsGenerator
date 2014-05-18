@@ -85,7 +85,7 @@ public abstract class ParameterToTest {
 
     }
 
-    public void generateMaximumDelay() {
+    public int generateMaximumDelay() {
 	int delay = 0;
 	int totalTime = 0;
 
@@ -106,6 +106,8 @@ public abstract class ParameterToTest {
 	}
 
 	this.setMaximumDelay(delay);
+
+	return delay;
     }
 
     public int getMaximumDelay() {

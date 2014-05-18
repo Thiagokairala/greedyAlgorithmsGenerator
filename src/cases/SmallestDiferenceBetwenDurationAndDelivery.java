@@ -5,7 +5,7 @@ import java.util.List;
 import model.ParameterToTest;
 import model.Task;
 
-public class smallestDiferenceBetwenDurationAndDelivery extends ParameterToTest {
+public class SmallestDiferenceBetwenDurationAndDelivery extends ParameterToTest {
 
     @Override
     public boolean isLeft(List<Task> left, List<Task> right, int walkerToLeft,
