@@ -5,7 +5,14 @@ import java.util.List;
 
 public abstract class ParameterToTest {
 
-    public List<Task> orderList(List<Task> listToOrder) {
+    private int maximumDelay = 0;
+    private List<Task> listOfTasks;
+
+    public void setOrderedList(List<Task> listToOrder) {
+	this.setListOfTasks(orderList(listToOrder));
+    }
+
+    private List<Task> orderList(List<Task> listToOrder) {
 	if (listToOrder.size() > 1) {
 	    int size = listToOrder.size();
 	    List<Task> left = new ArrayList<Task>();
@@ -78,6 +85,46 @@ public abstract class ParameterToTest {
 
     }
 
+    public void generateMaximumDelay() {
+	int delay = 0;
+	int totalTime = 0;
+
+	for (int i = 0; i < this.getListOfTasks().size(); i++) {
+	    totalTime = totalTime
+		    + this.getListOfTasks().get(i).getTaskDuration();
+
+	    int timeToDelivery = this.getListOfTasks().get(i)
+		    .getTaskTimeToDelivery();
+
+	    if (timeToDelivery < totalTime) {
+
+		if (totalTime - timeToDelivery > delay) {
+		    delay = totalTime - timeToDelivery;
+		}
+	    }
+
+	}
+
+	this.setMaximumDelay(delay);
+    }
+
+    public int getMaximumDelay() {
+	return maximumDelay;
+    }
+
+    public void setMaximumDelay(int maximumDelay) {
+	this.maximumDelay = maximumDelay;
+    }
+
+    public List<Task> getListOfTasks() {
+	return listOfTasks;
+    }
+
+    public void setListOfTasks(List<Task> listOfTasks) {
+	this.listOfTasks = listOfTasks;
+    }
+
     public abstract boolean isLeft(List<Task> left, List<Task> right,
 	    int walkerToLeft, int walkerToRight);
+
 }
