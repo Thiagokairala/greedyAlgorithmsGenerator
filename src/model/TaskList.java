@@ -15,12 +15,12 @@ public class TaskList {
 	    int duration = -1;
 
 	    while (duration < 1) {
-		duration = random.nextInt();
+		duration = random.nextInt(95);
 	    }
 	    int timeToDelivery = duration - 1;
 
 	    while (timeToDelivery < duration) {
-		timeToDelivery = random.nextInt();
+		timeToDelivery = random.nextInt(100);
 	    }
 
 	    Task task = new Task();

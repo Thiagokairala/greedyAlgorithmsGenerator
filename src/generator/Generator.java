@@ -13,7 +13,9 @@ import cases.SumOfDurationAndDelivery;
 
 public class Generator {
 
-    public ParameterToTest testCases(List<ParameterToTest> listToTest) {
+    public ParameterToTest testCases() {
+
+	List<ParameterToTest> listToTest = this.generateListOfParameters();
 
 	while (listToTest.size() > 1) {
 	    testOnce(listToTest);
@@ -24,7 +26,7 @@ public class Generator {
 
     public List<ParameterToTest> testOnce(List<ParameterToTest> listToTest) {
 	TaskList taskList = new TaskList();
-	int biggerDelay = 0;
+	int smallerDelay = 0;
 
 	taskList.generateRandomListOfTask();
 
@@ -33,17 +35,21 @@ public class Generator {
 
 	    int delay = listToTest.get(i).generateMaximumDelay();
 
-	    if (delay > biggerDelay) {
-		biggerDelay = delay;
+	    if (i == 0) {
+		smallerDelay = delay;
+	    }
+
+	    if (delay < smallerDelay) {
+		smallerDelay = delay;
 	    }
 	}
 
-	remove(biggerDelay, listToTest);
+	listToTest = remove(smallerDelay, listToTest);
 
 	return listToTest;
     }
 
-    public List<ParameterToTest> generateListOfParameters() {
+    private List<ParameterToTest> generateListOfParameters() {
 	List<ParameterToTest> listToReturn = new ArrayList<ParameterToTest>();
 
 	SmallestDiferenceBetwenDurationAndDelivery smallestDiference = new SmallestDiferenceBetwenDurationAndDelivery();
@@ -61,25 +67,28 @@ public class Generator {
 	return listToReturn;
     }
 
-    private void remove(final int biggerDelay, List<ParameterToTest> listToTest) {
-	int cont = 0;
+    private List<ParameterToTest> remove(final int smallerDelay,
+	    List<ParameterToTest> listToTest) {
+	int i = 0;
 
-	for (int i = 0; i < listToTest.size(); i++) {
-	    if (listToTest.get(i).getMaximumDelay() == biggerDelay) {
-		cont++;
+	System.out.println("The smaller delay of this try is: " + smallerDelay);
+	for (i = 0; i < listToTest.size(); i++) {
+	    ParameterToTest parameterToTest = listToTest.get(i);
+	    if (parameterToTest.getMaximumDelay() > smallerDelay) {
+		System.out.println("removing "
+			+ listToTest.remove(i).getClass() + " with delay of "
+			+ parameterToTest.getMaximumDelay());
+
+	    } else {
+		System.out
+			.println("wont remove " + parameterToTest.getClass()
+				+ " with delay of "
+				+ parameterToTest.getMaximumDelay());
 	    }
 	}
+	System.out.println(" ");
 
-	if (cont < 2) {
-	    for (int i = 0; i < listToTest.size(); i++) {
-		if (listToTest.get(i).getMaximumDelay() == biggerDelay) {
-		    // System.out.println("removing " +
-		    // listToTest.get(i).getClass());
-		    listToTest.remove(i);
-		    return;
-		}
-	    }
-	}
+	return listToTest;
     }
 
 }
