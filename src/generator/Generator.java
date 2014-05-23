@@ -17,8 +17,23 @@ public class Generator {
 
 	List<ParameterToTest> listToTest = this.generateListOfParameters();
 
+	System.out.println("Testing the following cases: \n");
+	for (int i = 0; i < listToTest.size(); i++) {
+	    System.out.println(listToTest.get(i).getClass().getName());
+	}
+
+	System.out.println("\n\n starting the tests:");
+
 	while (listToTest.size() > 1) {
 	    testOnce(listToTest);
+
+	    System.out
+		    .println("\t\t\tAfter this try, the options that are still availiable are: ");
+	    for (int i = 0; i < listToTest.size(); i++) {
+		System.out.println("\t\t\t\t\t" + listToTest.get(i).getClass().getName());
+	    }
+
+	    System.out.println("\n\n");
 	}
 
 	return listToTest.get(0);
@@ -71,19 +86,19 @@ public class Generator {
 	    List<ParameterToTest> listToTest) {
 	int i = 0;
 
-	System.out.println("The smaller delay of this try is: " + smallerDelay);
+	System.out.println("\tThe smaller delay of this try is: "
+		+ smallerDelay);
 	for (i = 0; i < listToTest.size(); i++) {
 	    ParameterToTest parameterToTest = listToTest.get(i);
 	    if (parameterToTest.getMaximumDelay() > smallerDelay) {
-		System.out.println("removing "
+		System.out.println("\t\tremoving "
 			+ listToTest.remove(i).getClass() + " with delay of "
 			+ parameterToTest.getMaximumDelay());
 
 	    } else {
-		System.out
-			.println("wont remove " + parameterToTest.getClass()
-				+ " with delay of "
-				+ parameterToTest.getMaximumDelay());
+		System.out.println("\t\twont remove "
+			+ parameterToTest.getClass() + " with delay of "
+			+ parameterToTest.getMaximumDelay());
 	    }
 	}
 	System.out.println(" ");
